@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Jokes Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #joke {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Random Joke Generator</h2>
+    <button onclick="generateJoke()">Get a Joke</button>
+    <p id="joke">Click the button for a joke!</p>
+</div>
+
+<script>
+    
+
+    const jokeContainer = document.getElementById('joke');
+    const url = 'https://v2.jokeapi.dev/joke/Any';
+
+    let jokesGenerator = () =>{
+        fetch(url)
+        .then(data => data.json())
+        .then (item =>{
+            if( item.type === "twopart"){
+                jokeContainer.innerHTML = `${item.setup}  <br> ${item.delivery}`
+            }
+            else{
+                jokeContainer.innerHTML = `${item.joke}`
+            }
+        })
+
+        .catch(error =>{
+            jokeContainer.innerHTML = "Something Went Wrong";
+            console.log(error);
+            
+        })
+       
+    }
+
+    function generateJoke(){
+        jokesGenerator();
+       }
+</script>
+
+</body>
+</html>
